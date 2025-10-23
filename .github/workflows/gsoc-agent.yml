@@ -1,0 +1,33 @@
+name: Weekly GSOC Agent Run
+
+on:
+  schedule:
+    - cron: "30 3 * * 1"  # Monday 9AM IST (IST = UTC+5:30 → 03:30 UTC)
+  workflow_dispatch:      # allows manual run from GitHub Actions
+
+jobs:
+  run-agent:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Install Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run GSOC Agent
+      env:
+        GH_PAT: ${{ secrets.GH_PAT }}                 # ✅ correct
+        NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+        NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+        GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        GMAIL_USER: ${{ secrets.GMAIL_USER }}
+        GMAIL_PASS: ${{ secrets.GMAIL_PASS }}
+        ALERT_EMAIL: ${{ secrets.ALERT_EMAIL }}
+      run: npm run dev
