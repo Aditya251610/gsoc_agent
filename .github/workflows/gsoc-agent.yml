@@ -23,7 +23,7 @@ jobs:
 
     - name: Run GSOC Agent
       env:
-        GH_PAT: ${{ secrets.GH_PAT }}                 # ✅ correct
+        GITHUB_TOKEN: ${{ secrets.GH_PAT }}                 # ✅ correct
         NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
         NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
         GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
